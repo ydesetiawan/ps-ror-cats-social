@@ -10,9 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_05_070534) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_05_071427) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cats", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name", limit: 30, null: false
+    t.string "race", null: false
+    t.string "sex", null: false
+    t.integer "age_in_months", null: false
+    t.text "image_urls", default: [], array: true
+    t.string "description", limit: 200, null: false
+    t.boolean "has_matched", default: false, null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.index ["name"], name: "index_cats_on_name"
+    t.index ["user_id"], name: "index_cats_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name", limit: 50
@@ -24,4 +39,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_05_070534) do
     t.index ["name", "email"], name: "user_index_1"
   end
 
+  add_foreign_key "cats", "users"
 end
