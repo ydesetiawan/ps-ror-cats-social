@@ -156,6 +156,8 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     json (2.7.2)
+    jwt (2.8.1)
+      base64
     language_server-protocol (3.17.0.3)
     lint_roller (1.1.0)
     listen (3.9.0)
@@ -413,6 +415,7 @@ DEPENDENCIES
   guard-rspec
   importmap-rails
   jbuilder
+  jwt
   pg (~> 1.2)
   puma (>= 5.0)
   pundit
