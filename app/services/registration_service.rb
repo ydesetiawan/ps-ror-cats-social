@@ -14,16 +14,14 @@ class RegistrationService
       encrypt_password
       save_user
     else
-      raise BadRequestException, @user.errors.full_messages
+      raise BadRequestException.new(@user.errors.full_messages.join(", "))
     end
   end
 
   private
     def validate_password_length
       password = @user_params[:password]
-      if password.length > 15
-        raise BadRequestException, "Password to long (>15)"
-      end
+      raise BadRequestException.new("Password to long (>15)") if password.length > 15
     end
 
     def encrypt_password
@@ -34,7 +32,7 @@ class RegistrationService
       if @user.save
         { message: "User registered successfully", data: response_data }
       else
-        raise InternalServerErrorException,  @user.errors.full_messages
+        raise InternalServerErrorException.new(@user.errors.full_messages.join(", "))
       end
     end
     def response_data
