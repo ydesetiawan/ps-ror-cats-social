@@ -1,11 +1,13 @@
 # app/services/registration_service.rb
 class RegistrationService
-  SECRET_KEY = "KEY"
+  include AuthenticationHelper
   def initialize(user_params)
     @user_params = user_params
   end
 
   def register
+
+    check_email_uniqueness
     validate_password_length
 
     @user = User.new(@user_params)
@@ -24,27 +26,22 @@ class RegistrationService
       raise BadRequestException.new("Password to long (>15)") if password.length > 15
     end
 
+    def check_email_uniqueness
+      if User.exists?(email: @user_params[:email])
+        raise ConflictException.new("Email has already been taken")
+      end
+    end
+
     def encrypt_password
       @user.password = BCrypt::Password.create(@user_params[:password])
     end
 
     def save_user
       if @user.save
-        { message: "User registered successfully", data: response_data }
+        { message: "User registered successfully", data: response_data(@user) }
       else
         raise InternalServerErrorException.new(@user.errors.full_messages.join(", "))
       end
     end
-    def response_data
-      {
-        email: @user.email,
-        name: @user.name,
-        accessToken: generate_token
-      }
-    end
-    def generate_token
-      exp = 8.hours.from_now.to_i
-      payload = { user_id: @user.id, exp: }
-      JWT.encode(payload, SECRET_KEY)
-    end
+
 end
