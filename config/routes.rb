@@ -5,5 +5,6 @@ Rails.application.routes.draw do
     post 'user/register', to: 'users#register'
     post 'user/login', to: 'users#login'
     post 'cat', to: 'cats#create_cat'
+    put 'cat/:id', to: 'cats#update_cat'
   end
 end

@@ -34,11 +34,15 @@ module AuthenticationHelper
     token = request.headers['Authorization']&.split(' ')&.last
     return unauthorized_response('Unauthorized') unless token
 
-    decoded_token = decode_token(token)
-    return unauthorized_response('Unauthorized')  unless decoded_token
+    begin
+      decoded_token = decode_token(token)
+      return unauthorized_response('Unauthorized')  unless decoded_token
 
-    @current_user = User.find_by(id: decoded_token[:user_id])
-    render unauthorized_response('Unauthorized')  unless @current_user
+      @current_user = User.find_by(id: decoded_token[:user_id])
+      render unauthorized_response('Unauthorized')  unless @current_user
+    rescue StandardError => e
+      unauthorized_response(e)
+    end
   end
 
   def current_user
