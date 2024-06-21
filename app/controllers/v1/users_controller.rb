@@ -1,14 +1,12 @@
-# Generic resource bad request exception
 module V1
   class UsersController < ::ApplicationController
-    skip_before_action :verify_authenticity_token
     def register
-      service = RegistrationService.new(user_params)
+      service = Users::RegistrationService.new(user_params)
       result = service.register
       render json: result
     end
     def login
-      service = LoginService.new(login_params)
+      service = Users::LoginService.new(login_params)
       result = service.login
       render json: result
     end
@@ -19,6 +17,6 @@ module V1
       end
       def login_params
         params.require(:user).permit(:email, :password)
-    end
+      end
   end
 end

@@ -1,5 +1,4 @@
 module Response
-
   def internal_server_error_response(errors, status = 500)
     render json: { errors: }, status:
   end
@@ -12,14 +11,10 @@ module Response
     render json: { errors: }, status:
   end
 
-
   def not_found_response(errors, status = :not_found)
     render json: { errors: }, status:
   end
-
-
   def bad_request_response(errors)
     render json: { errors: }, status: :bad_request
   end
-
 end
