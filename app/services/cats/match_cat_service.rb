@@ -14,9 +14,7 @@ module Cats
       find_match_cat
       validate_same_owner
       validate_gender
-
-      # TODO
-      # 400 if both matchCatId &userCatId already matched
+      validate_has_matched
       save
     end
 
@@ -38,6 +36,10 @@ module Cats
 
       def validate_same_owner
         raise BadRequestException.new("MatchCatId and UserCatId are from the same owner") if (@user_cat_id == @match_cat_id) || (@match_cat.user == @user)
+      end
+
+      def validate_has_matched
+        raise BadRequestException.new("Both matchCatId and userCatId already matched") if @match_cat.has_matched || @user_cat.has_matched
       end
       def save
         @cat_matches = CatMatches.new(issuer: @user, receiver: @match_cat.user, match_cat_id: @match_cat_id, user_cat_id: @user_cat_id, message: @message, status: 'pending')
