@@ -14,6 +14,12 @@ module V1
       render json: result
     end
 
+    def delete_cat
+      service = Cats::DeleteCatService.new(current_user, params[:id])
+      result = service.delete_cat
+      render json: result
+    end
+
     private
       def create_cat_params
         params.permit(
