@@ -39,7 +39,7 @@ module Cats
       end
 
       def validate_has_matched
-        raise BadRequestException.new("Both matchCatId and userCatId already matched") if @match_cat.has_matched || @user_cat.has_matched
+        raise BadRequestException.new("Both MatchCatId and UserCatId already matched") if @match_cat.has_matched || @user_cat.has_matched
       end
       def save
         @cat_matches = CatMatches.new(issuer: @user, receiver: @match_cat.user, match_cat_id: @match_cat_id, user_cat_id: @user_cat_id, message: @message, status: 'pending')
