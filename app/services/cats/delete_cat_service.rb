@@ -2,7 +2,7 @@
 
 module Cats
   class DeleteCatService < BaseCatService
-    def delete_cat
+    def call
       find_cat
       validate_user_ownership
       @cat.destroy if @cat

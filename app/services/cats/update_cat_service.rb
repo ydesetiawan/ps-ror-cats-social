@@ -8,7 +8,7 @@ module Cats
       @cat_id = cat_id
     end
 
-    def update_cat
+    def call
       find_cat
       validate_user_ownership
 

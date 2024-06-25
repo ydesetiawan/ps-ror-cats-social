@@ -1,22 +1,26 @@
 # frozen_string_literal: true
 module V1
-  class CatsController < ApplicationController
+  class CatController < ApplicationController
     before_action :authenticate_request
-    def create_cat
+    def index
+      service = Cats::CatQueryService.new(current_user, params)
+      result = service.call
+      render json: result
+    end
+    def create
       service = Cats::CreateCatService.new(current_user, create_cat_params)
-      result = service.create_cat
+      result = service.call
       render json: result
     end
-
-    def update_cat
+    def update
       service = Cats::UpdateCatService.new(current_user, params[:id], create_cat_params)
-      result = service.update_cat
+      result = service.call
       render json: result
     end
 
-    def delete_cat
+    def destroy
       service = Cats::DeleteCatService.new(current_user, params[:id])
-      result = service.delete_cat
+      result = service.call
       render json: result
     end
 

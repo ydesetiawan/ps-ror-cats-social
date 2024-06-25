@@ -8,7 +8,7 @@ module Cats
       @cat.user = @user
     end
 
-    def create_cat
+    def call
       if @cat.valid?
         save_cat
       else
