@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Cats
-  class UpdateCatService
+  class UpdateCatService < BaseCatService
     def initialize(user, cat_id, update_cat_params)
       @user = user
       @update_cat_params = update_cat_params
@@ -9,9 +9,7 @@ module Cats
     end
 
     def update_cat
-      @cat = Cat.find_by(id: @cat_id)
-      raise NotFoundException.new("Cat not found") unless @cat
-
+      find_cat
       validate_user_ownership
 
       # TODO
@@ -27,9 +25,6 @@ module Cats
     end
 
     private
-      def validate_user_ownership
-        raise NotFoundException.new("Cat not found") if @cat.user.id != @user.id
-      end
       def save_cat
         if @cat.update(@update_cat_params)
           { message: "update success",
