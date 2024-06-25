@@ -13,8 +13,18 @@ module Cats
         raise NotFoundException.new("Cat not found") unless @cat
       end
 
-      def validate_user_ownership
-        raise NotFoundException.new("Cat not found") if @cat.user.id != @user.id
+      def find_cat_with_identity(identity)
+        @cat = Cat.find_by(id: @cat_id)
+        raise NotFoundException.new(identity + " is not found") unless @cat
+        @cat
       end
+
+      def validate_user_ownership
+        raise NotFoundException.new("User Cat Id is not belong to the user") if @cat.user.id != @user.id
+      end
+
+
+
+
   end
 end

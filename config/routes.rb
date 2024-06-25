@@ -6,5 +6,8 @@ Rails.application.routes.draw do
     post 'user/login', to: 'users#login'
 
     resources :cat, only: [:create, :update, :destroy, :index]
+
+    post 'cat/match', to: 'cat_match#create'
+    get 'cat/match', to: 'cat_match#index'
   end
 end
