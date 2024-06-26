@@ -37,7 +37,7 @@ module Cats
       end
       def approve
         unless @cat_match.update(status: 'approved')
-          raise InternalServerErrorException.new("Error when approve the cat match request")
+          raise InternalServerErrorException.new(@cat_match.errors.full_messages.join(", "))
         end
       end
   end

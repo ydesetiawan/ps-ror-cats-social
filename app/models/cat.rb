@@ -33,7 +33,7 @@ class Cat < ApplicationRecord
     cat = find_by(id: cat_id)
     raise NotFoundException.new("Cat id is not found") unless cat
     unless cat.update(has_matched: true)
-      raise InternalServerErrorException.new("update_has_matched is error")
+      raise InternalServerErrorException.new(cat.errors.full_messages.join(", "))
     end
   end
 

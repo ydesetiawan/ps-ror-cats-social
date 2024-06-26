@@ -17,7 +17,7 @@ module Cats
         if @cat_match.update(status: 'rejected')
           { message: "successfully reject the cat match request" }
         else
-          raise InternalServerErrorException.new("Error when reject request")
+          raise InternalServerErrorException.new(@cat_matches.errors.full_messages.join(", "))
         end
       end
   end

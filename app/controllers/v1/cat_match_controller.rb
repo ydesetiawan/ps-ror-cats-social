@@ -26,7 +26,9 @@ module V1
     end
 
     def delete
-
+      service = Cats::DeleteMatchCatService.new(current_user, params[:id])
+      result = service.call
+      render json: result
     end
 
     private
