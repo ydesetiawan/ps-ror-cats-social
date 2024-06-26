@@ -22,9 +22,5 @@ module Cats
       def validate_user_ownership
         raise NotFoundException.new("User Cat Id is not belong to the user") if @cat.user.id != @user.id
       end
-
-
-
-
   end
 end

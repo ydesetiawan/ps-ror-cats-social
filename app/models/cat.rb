@@ -29,6 +29,14 @@ class Cat < ApplicationRecord
   validates :image_urls, presence: true
   validate :validate_image_urls
 
+  def self.update_has_matched(cat_id)
+    cat = find_by(id: cat_id)
+    raise NotFoundException.new("Cat id is not found") unless cat
+    unless cat.update(has_matched: true)
+      raise InternalServerErrorException.new(cat.errors.full_messages.join(", "))
+    end
+  end
+
   private
     def validate_image_urls
       if image_urls.is_a?(Array) && image_urls.any?

@@ -9,5 +9,8 @@ Rails.application.routes.draw do
 
     post 'cat/match', to: 'cat_match#create'
     get 'cat/match', to: 'cat_match#index'
+    post 'cat/match/approve', to: 'cat_match#approve'
+    post 'cat/match/reject', to: 'cat_match#reject'
+    delete 'cat/match/:id', to: 'cat_match#delete'
   end
 end

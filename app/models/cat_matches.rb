@@ -12,4 +12,12 @@ class CatMatches < ApplicationRecord
     approved: 'approved',
     rejected: 'rejected'
   }
+
+  def self.find_by_match_cat_id_and_status(match_cat_id, status)
+    where(match_cat_id:, status:)
+  end
+
+  def self.find_by_user_cat_id_and_status(user_cat_id, status)
+    where(user_cat_id:, status:)
+  end
 end
